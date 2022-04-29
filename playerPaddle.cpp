@@ -9,42 +9,66 @@
 
 extern setup* newGame;
 
-playerPaddle::playerPaddle(int h) {
-    setRect(0,0,75,10);
+//sets up player paddle
+playerPaddle::playerPaddle() {
+
+    //sets size and position of player paddle
+    setRect(0, 0, 75,10);
     setPos(420,550);
 
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::blue);
-    setBrush(brush);
+    //sets color and style for player paddle
+    QBrush paddleArt;
+    paddleArt.setStyle(Qt::SolidPattern);
+    paddleArt.setColor(Qt::blue);
+    setBrush(paddleArt);
 
+    //allows player paddle to take key events
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
-    screenh = h;
 }
 
+//key inputs for left movement, right movement, and space launch
+//has conditions for paddle not being able to move off screen
 void playerPaddle::keyPressEvent(QKeyEvent *event) {
-    if(event->key() == Qt::Key_Left || event->key() == Qt::Key_A){
-        if(pos().x() >= 10){
-            setPos(x()-10,y());
+
+    //left key event
+    if(event->key() == Qt::Key_Left) {
+
+        //stops paddle from moving off screen to the left
+        if(pos().x() >= 10) {
+
+            setPos(x() - 14, y());
         }
+
     }
 
-    if(event->key() == Qt::Key_Right || event->key() == Qt::Key_D){
-        if(pos().x() <= 820){
-            setPos(x()+10,y());
+    //right key event
+    if(event->key() == Qt::Key_Right) {
+
+        //stops paddle from moving off screen to the right
+        if(pos().x() <= 820) {
+
+            setPos(x() + 14, y());
         }
+
     }
 
-    if(event->key() == Qt::Key_Space){
-        if(firstball) {
-            newGame->pb->launch();
-            firstball = false;
+    //space bar event
+    if(event->key() == Qt::Key_Space) {
+
+        //if first ball
+        if(startingBall) {
+
+            newGame->pb->startingBall();
+            startingBall = false;
         }
 
-        else if(newGame->pb->canLaunch()) {
-            newGame->pb->relaunch();
+        //if subsequent ball (missed or hit by opposing ball)
+        else if(newGame->pb->launch()) {
+
+            newGame->pb->subsequentBalls();
         }
+
     }
 
 }

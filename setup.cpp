@@ -4,26 +4,28 @@
 #include "enemyPaddle.h"
 #include "enemyBall.h"
 
-setup::setup()
-{
-    //Scene setup
+setup::setup() {
+
+    //sets up scene
     scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,width,height);
+    scene->setSceneRect(0, 0, 900, 600);
 
-    pp = new playerPaddle(height);
-    ep = new enemyPaddle(height, width);
-    pb = new playerBall(height, width);
-    eb = new enemyBall(height, width);
+    //defines items
+    pp = new playerPaddle();
+    ep = new enemyPaddle();
+    pb = new playerBall();
+    eb = new enemyBall();
 
+    //adds items to scene
     scene->addItem(pp);
     scene->addItem(ep);
     scene->addItem(pb);
     scene->addItem(eb);
 
-    //Setup View
+    //sets scene & disables scrollbar
     setScene(scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(width,height);
-    show(); //Display gui
+    setFixedSize(900, 600);
+    show();
 }

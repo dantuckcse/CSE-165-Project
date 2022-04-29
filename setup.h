@@ -9,20 +9,17 @@
 #include "enemyPaddle.h"
 #include "enemyBall.h"
 
-class setup: public QGraphicsView
-{
+class setup: public QGraphicsView {
+
 public:
+
     setup();
+
     QGraphicsScene* scene;
     playerPaddle* pp;
     enemyPaddle* ep;
     playerBall* pb;
     enemyBall* eb;
-
-private:
-    int height = 600;
-    int width = 900;
-
 };
 
 #endif // SETUP_H
