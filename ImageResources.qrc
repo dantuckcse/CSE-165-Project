@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/MyFiles"/>
+    <qresource prefix="/">
+        <file>../Downloads/BreakOutBackground.png</file>
+    </qresource>
+</RCC>
