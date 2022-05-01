@@ -11,6 +11,11 @@ enemyScore::enemyScore(QGraphicsItem *parent): QGraphicsTextItem(parent){
 
 void enemyScore::changeEnemyScore(int num){
     enemy_Score = enemy_Score + num;
+
+    if (enemy_Score < 0){
+        enemy_Score = 0;
+    }
+
     setPlainText(QString("Enemy Score: ") + QString::number(enemy_Score));
 }
 

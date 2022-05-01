@@ -124,6 +124,7 @@ void playerBall::ballMovement() {
     if(pos().y() + 20 >= 600) {
 
         //stops ball movement and resets ball to starting position
+        newGame->ps->changePlayerScore(-2);
         transY = transX = 0;
         setPos(453, 520);
 
