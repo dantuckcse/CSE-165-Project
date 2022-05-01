@@ -26,7 +26,7 @@ enemyPaddle::enemyPaddle() {
 
     //timer for enemy paddle ai movement
     QTimer *timer = new QTimer();
-    timer->start(10);
+    timer->start(20);
     connect(timer, SIGNAL(timeout()), this, SLOT(enemyAIMovement()));
 
     //timer for enemy paddle ai lauching ball
@@ -42,15 +42,17 @@ void enemyPaddle::enemyAIMovement() {
     int vectorX = (x() + 75 * 0.5) - (newGame->eb->x() + 10);
 
     //calculates speed that enemy paddle will follow enemy ball
-    int paddleSpeed = abs(vectorX / 30);
+    int paddleSpeed = abs(vectorX / 40);
 
     //ball vector direction change will change enemy paddle direction and sets the speed
     if(vectorX > 0) {
+
 
         setPos(x() - 10* paddleSpeed, y());
     }
 
     else if(vectorX < 0) {
+
 
         setPos(x() + 10 * paddleSpeed, y());
     }
@@ -61,7 +63,7 @@ void enemyPaddle::enemyAIMovement() {
 void enemyPaddle::enemyAILaunch(){
 
     //if first ball
-    if(startingBall) {
+    if(startingBall && newGame->pp->started) {
 
         newGame->eb->startingBall();
         startingBall = false;

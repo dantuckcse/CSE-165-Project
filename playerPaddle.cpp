@@ -27,6 +27,10 @@ playerPaddle::playerPaddle() {
     setFocus();
 }
 
+bool playerPaddle::hasStarted(){
+    return started;
+}
+
 //key inputs for left movement, right movement, and space launch
 //has conditions for paddle not being able to move off screen
 void playerPaddle::keyPressEvent(QKeyEvent *event) {
@@ -34,10 +38,12 @@ void playerPaddle::keyPressEvent(QKeyEvent *event) {
     //left key event
     if(event->key() == Qt::Key_Left) {
 
-        //stops paddle from moving off screen to the left
-        if(pos().x() >= 10) {
+        setPos(x() - 35, y());
 
-            setPos(x() - 14, y());
+        //stops paddle from moving off screen to the left
+        if(pos().x() <= -35) {
+
+           setPos(x() + 35, y());
         }
 
     }
@@ -45,10 +51,12 @@ void playerPaddle::keyPressEvent(QKeyEvent *event) {
     //right key event
     if(event->key() == Qt::Key_Right) {
 
-        //stops paddle from moving off screen to the right
-        if(pos().x() <= 820) {
+        setPos(x() + 35, y());
 
-            setPos(x() + 14, y());
+        //stops paddle from moving off screen to the right
+        if(pos().x() >= 850) {
+
+            setPos(x() - 35, y());
         }
 
     }
@@ -59,6 +67,7 @@ void playerPaddle::keyPressEvent(QKeyEvent *event) {
         //if first ball
         if(startingBall) {
 
+            started = true;
             newGame->pb->startingBall();
             startingBall = false;
         }

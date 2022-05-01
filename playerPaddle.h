@@ -18,6 +18,8 @@ public:
     int getkeypress();
 
     bool startingBall = true;
+    bool started = false;
+    bool hasStarted();
 };
 
 #endif // PLAYERPADDLE_H

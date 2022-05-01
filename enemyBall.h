@@ -17,6 +17,7 @@ public:
     void startingBall();
     void subsequentBalls();
     bool launch();
+    void BlockCollision();
 
     int transY = 0;
     int transX = 0;

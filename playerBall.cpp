@@ -8,6 +8,7 @@
 
 #include "PlayerBall.h"
 #include "setup.h"
+#include "block.h"
 
 extern setup* newGame;
 
@@ -86,6 +87,7 @@ void playerBall::ballMovement() {
         //causes enemy ball to move in opposite Y direction if it collides with any non-enemy paddle objects
         if(typeid(*(Collisions[0])) != typeid(enemyPaddle)) {
 
+            BlockCollision();
             transY *= -1;
         }
 
@@ -97,6 +99,7 @@ void playerBall::ballMovement() {
             transY *= -1;
 
             //stops ball movement and resets ball to starting position
+            newGame->es->changeEnemyScore(-1);
             newGame->eb->transY = 0;
             newGame->eb->transX = 0;
             newGame->eb->setPos(453, 80);
@@ -105,12 +108,6 @@ void playerBall::ballMovement() {
         }
 
     }
-
-    else if(Collisions.size() != 0) {
-
-        transY *= -1;
-    }
-
     //player ball changes X directions if colliding with left or right screen edge
     if(pos().x() <= 0 || pos().x() + 20 >= 900) {
 
@@ -141,6 +138,19 @@ void playerBall::ballMovement() {
     }
 
  }
+
+void playerBall::BlockCollision(){ //when the ball collides with a block
+    QList<QGraphicsItem*> cItems = collidingItems();
+    for (size_t i = 0, n = cItems.size(); i < n; ++i){
+        Block* block = dynamic_cast<Block*>(cItems[i]);
+        if (block){
+            newGame->scene->removeItem(block); // remove the block from screen
+            newGame->ps->changePlayerScore(1); // add a point to the player score
+            delete block; // delete that block object
+        }
+    }
+}
+
 
 //allows enemy ball to be launched again
 bool playerBall::launch() {
