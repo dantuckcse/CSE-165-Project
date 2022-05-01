@@ -27,6 +27,10 @@ playerPaddle::playerPaddle() {
     setFocus();
 }
 
+bool playerPaddle::hasStarted(){
+    return started;
+}
+
 //key inputs for left movement, right movement, and space launch
 //has conditions for paddle not being able to move off screen
 void playerPaddle::keyPressEvent(QKeyEvent *event) {
@@ -62,14 +66,14 @@ void playerPaddle::keyPressEvent(QKeyEvent *event) {
 
         //if first ball
         if(startingBall) {
-
+            started = true;
             newGame->pb->startingBall();
             startingBall = false;
+            newGame->gameTimer->start(120000);
         }
 
         //if subsequent ball (missed or hit by opposing ball)
         else if(newGame->pb->launch()) {
-
             newGame->pb->subsequentBalls();
         }
 

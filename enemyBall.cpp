@@ -99,6 +99,7 @@ void enemyBall::ballMovement() {
             transY *= -1;
 
             //stops ball movement and resets ball to starting position
+            newGame->ps->changePlayerScore(-1);
             newGame->pb->transY = 0;
             newGame->pb->transX = 0;
             newGame->pb->setPos(453, 520);
@@ -124,6 +125,7 @@ void enemyBall::ballMovement() {
     if(pos().y() <= 0) {
 
         //stops ball movement and resets ball to starting position
+        newGame->es->changeEnemyScore(-2);
         transY = transX = 0;
         setPos(453, 80);
 

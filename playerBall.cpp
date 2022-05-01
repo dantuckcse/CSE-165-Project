@@ -10,6 +10,7 @@
 #include "setup.h"
 #include "block.h"
 
+
 extern setup* newGame;
 
 //sets up player ball
@@ -99,6 +100,7 @@ void playerBall::ballMovement() {
             transY *= -1;
 
             //stops ball movement and resets ball to starting position
+            newGame->es->changeEnemyScore(-1);
             newGame->eb->transY = 0;
             newGame->eb->transX = 0;
             newGame->eb->setPos(453, 80);
@@ -123,6 +125,7 @@ void playerBall::ballMovement() {
     if(pos().y() + 20 >= 600) {
 
         //stops ball movement and resets ball to starting position
+        newGame->ps->changePlayerScore(-2);
         transY = transX = 0;
         setPos(453, 520);
 

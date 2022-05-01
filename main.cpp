@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QTimer>
 
 #include "setup.h"
 

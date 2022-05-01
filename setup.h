@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QTimer>
 
 #include "playerPaddle.h"
 #include "PlayerBall.h"
@@ -20,6 +21,7 @@ public:
     void createBlockGrid();
 
     QGraphicsScene* scene;
+    QTimer *gameTimer;
     playerPaddle* pp;
     enemyPaddle* ep;
     playerBall* pb;

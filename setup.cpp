@@ -4,6 +4,7 @@
 #include "enemyPaddle.h"
 #include "enemyBall.h"
 #include "block.h"
+#include <QBrush>
 
 
 setup::setup() {
@@ -11,6 +12,9 @@ setup::setup() {
     //sets up scene
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 900, 600);
+    // QLinearGradient gradient(0, 0, 900, 600);
+    //gradient.setSpread(QGradient::PadSpread);
+    scene->setBackgroundBrush(QColor(150, 150, 150));
 
     //defines items
     pp = new playerPaddle();
@@ -19,7 +23,8 @@ setup::setup() {
     eb = new enemyBall();
     ps = new playerScore();
     es = new enemyScore();
-    es->setPos(es->x() + 750, es->y()); //changing the position of the enemy score text to be on the right side of the screen
+    gameTimer = new QTimer(this);
+    es->setPos(es->x() + 680, es->y()); //changing the position of the enemy score text to be on the right side of the screen
 
     //adds items to scene
     scene->addItem(pp);
