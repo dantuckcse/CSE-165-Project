@@ -1,124 +1,161 @@
-#include "PlayerBall.h"
-#include "setup.h"
-
 #include <QCoreApplication>
-
 #include <QGraphicsItem>
 #include <QBrush>
 #include <QList>
 #include <QTimer>
 #include <QTime>
-#include <cstdlib> //for rand
-#include <ctime>   //for rand seed
+#include <cstdlib>
+
+#include "PlayerBall.h"
+#include "setup.h"
+#include "block.h"
+
 
 extern setup* newGame;
 
-playerBall::playerBall(int h, int w) {
-    setRect(0,0,8,8);
-    setPos(453,520);
+//sets up player ball
+playerBall::playerBall() {
 
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::blue);
-    setBrush(brush);
+    //sets size and position of player ball
+    setRect(0, 0, 8, 8);
+    setPos(453, 520);
 
-    speed = 2;
-    screenh = h;
-    screenw = w;
-
+    //sets color and style of player ball
+    QBrush ballArt;
+    ballArt.setStyle(Qt::SolidPattern);
+    ballArt.setColor(Qt::blue);
+    setBrush(ballArt);
 }
 
-void playerBall::launch(){
-    srand(time(NULL));  //randomize random numbers
+//manages the first ball
+void playerBall::startingBall() {
 
-    vmove = 1;
+    transY = 1;
 
-    if(rand() % 2 == 0)
-        hmove = -1;
-    else
-        hmove = 1;
-    launchable = false;
+    srand(time(NULL));
 
+    //randomly launches first player ball left or right
+    if(rand() % 2 == 0) {
+
+        transX = 1;
+    }
+
+    else {
+
+        transX = -1;
+    }
+
+    startingPosition = false;
+
+    //sets timer for player ball movement
     QTimer *timer = new QTimer();
-    timer->start(12.5);
-    connect(timer, SIGNAL(timeout()), this, SLOT(move()));
-
-    QTimer *timer2 = new QTimer();
-    timer2->start(10000);
-    connect(timer2, SIGNAL(timeout()), this, SLOT(speedup()));
-
-    //QTimer *timer3 = new QTimer();
-    //timer3->start(20000);
-    //connect(timer3, SIGNAL(timeout()), this, SLOT(penalty()));
+    timer->start(15);
+    connect(timer, SIGNAL(timeout()), this, SLOT(ballMovement()));
 }
 
-void playerBall::relaunch()
-{
-    //Display prompt
+//manages all subsequent player balls
+void playerBall::subsequentBalls() {
 
-    speed = 2;
-    srand(time(NULL));  //randomize random numbers
+    transY = 1;
 
-    vmove = 1;
+    srand(time(NULL));
 
-    if(rand() % 2 == 0)
-        hmove = -1;
-    else
-        hmove = 1;
+    //randomly launches subsequent player balls left or right
+    if(rand() % 2 == 0) {
 
-    launchable = false;
+        transX = 1;
+    }
+
+    else {
+
+        transX = -1;
+    }
+
+    startingPosition = false;
 }
 
-bool playerBall::canLaunch()
-{
-    return launchable;
-}
+//manages player ball movement
+void playerBall::ballMovement() {
 
-void playerBall::speedup() {
-    speed += 0.5;
-}
+    //sets the speed that the enemy ball moves (currently at 3)
+    setPos(x() - transX * 3, y() - transY * 3);
 
-void playerBall::move() {
-
-    setPos(x() - hmove * speed, y() - vmove * speed);
-
-    //Collision management
+    //manages the collision conditions
     QList<QGraphicsItem *> Collisions = collidingItems();
 
     if(Collisions.size() == 1) {
-        if(typeid(*(Collisions[0])) != typeid(enemyPaddle))
-            vmove = -vmove;
 
-        else if(typeid(*(Collisions[0])) == typeid(enemyPaddle)){
-            vmove = -vmove;
+        //causes enemy ball to move in opposite Y direction if it collides with any non-enemy paddle objects
+        if(typeid(*(Collisions[0])) != typeid(enemyPaddle)) {
 
-
+            BlockCollision();
+            transY *= -1;
         }
+
+        //causes player ball to move in opposite Y direction if it collides with the enemy paddle
+        //and resets enemy ball as penalty
+        //WIP: will remove points from enemy
+        else if(typeid(*(Collisions[0])) == typeid(enemyPaddle)) {
+
+            transY *= -1;
+
+            //stops ball movement and resets ball to starting position
+            newGame->es->changeEnemyScore(-1);
+            newGame->eb->transY = 0;
+            newGame->eb->transX = 0;
+            newGame->eb->setPos(453, 80);
+
+            newGame->eb->startingPosition = true;
+        }
+
     }
-    else if(Collisions.size() != 0) {
-        vmove = -vmove;
+    //player ball changes X directions if colliding with left or right screen edge
+    if(pos().x() <= 0 || pos().x() + 20 >= 900) {
+
+        transX *= -1;
     }
 
+    //player ball changes Y direction if colliding with top of screen
+    if(pos().y() <= 0) {
 
-
-    //Top of screen and Bottom of screen
-    if(pos().x() <= 0 || pos().x() + 20 >= screenw){
-        hmove = -hmove;
+        transY *= -1;
     }
 
-    if(pos().y() <= 0){
-        vmove = -vmove;
-    }
+    //5 second no ball movement penalty if player ball hits bottom of screen
+    if(pos().y() + 20 >= 600) {
 
-    if(pos().y() + 20 >= screenh){ //PlayerMisses
-        vmove = hmove = 0;
-        setPos(453,520);
+        //stops ball movement and resets ball to starting position
+        newGame->ps->changePlayerScore(-2);
+        transY = transX = 0;
+        setPos(453, 520);
+
         QTime penaltyTime= QTime::currentTime().addSecs(5);
-        while (QTime::currentTime() < penaltyTime){
+
+        while (QTime::currentTime() < penaltyTime) {
+
             QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
 
-        launchable = true;
+        startingPosition = true;
     }
 
  }
+
+void playerBall::BlockCollision(){ //when the ball collides with a block
+    QList<QGraphicsItem*> cItems = collidingItems();
+    for (size_t i = 0, n = cItems.size(); i < n; ++i){
+        Block* block = dynamic_cast<Block*>(cItems[i]);
+        if (block){
+            newGame->scene->removeItem(block); // remove the block from screen
+            newGame->ps->changePlayerScore(1); // add a point to the player score
+            delete block; // delete that block object
+        }
+    }
+}
+
+
+//allows enemy ball to be launched again
+bool playerBall::launch() {
+
+    return startingPosition;
+}
