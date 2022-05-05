@@ -4,22 +4,17 @@
 #include <QGraphicsRectItem>
 #include <QObject>
 
-class playerPaddle: public QObject, public  QGraphicsRectItem {
-
+class playerPaddle: public QObject, public  QGraphicsRectItem
+{
     Q_OBJECT
 public:
-
-    playerPaddle();
-    ~playerPaddle(){
-
-    }
-
+    playerPaddle(int);
+    ~playerPaddle(){}
     void keyPressEvent(QKeyEvent* event);
     int getkeypress();
-
-    bool startingBall = true;
-    bool started = false;
-    bool hasStarted();
+private:
+    bool firstball = true;
+    int screenh;
 };
 
 #endif // PLAYERPADDLE_H

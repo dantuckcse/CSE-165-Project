@@ -4,28 +4,31 @@
 #include <QObject>
 #include <QGraphicsRectItem>
 
-class enemyBall: public QObject, public QGraphicsRectItem {
-
+class enemyBall: public QObject, public QGraphicsRectItem
+{
     Q_OBJECT
 public:
+    enemyBall(int, int);
+    ~enemyBall(){}
 
-    enemyBall();
-    ~enemyBall() {
-
-    }
-
-    void startingBall();
-    void subsequentBalls();
-    bool launch();
-    void BlockCollision();
-
-    int transY = 0;
-    int transX = 0;
-    bool startingPosition = true;
+    void launch();
+    void relaunch();
+    bool canLaunch();
 
 public slots:
+    void move();
+    void speedup();
 
-    void ballMovement();
+
+private:
+    int vmove = 0;
+    int hmove = 0;
+    int screenh;
+    int screenw;
+    int speed;
+    bool launchable = true;
+    int winPts = 10;
 };
+
 
 #endif // ENEMYBALL_H

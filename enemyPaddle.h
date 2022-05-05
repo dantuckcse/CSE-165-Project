@@ -4,23 +4,22 @@
 #include <QGraphicsRectItem>
 #include <QObject>
 
-class enemyPaddle: public QObject, public QGraphicsRectItem {
-
+class enemyPaddle: public QObject, public QGraphicsRectItem
+{
     Q_OBJECT
 public:
-
-    enemyPaddle();
-    ~enemyPaddle(){
-
-    }
-
-    bool startingBall = true;
+    enemyPaddle(int, int);
+    ~enemyPaddle(){}
 
 public slots:
+    void follow();
+    void autoLaunch();
 
-    void enemyAIMovement();
-    void enemyAILaunch();
-
+private:
+    bool firstball = true;
+    int screenh;
+    int screenw;
+    int paddlelength;
 };
 
 #endif // ENEMYPADDLE_H
