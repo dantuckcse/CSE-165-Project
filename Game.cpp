@@ -3,8 +3,10 @@
 #include "Button.h"
 #include <QGraphicsTextItem>
 #include "setup.h"
+#include "Combine.h"
 
 extern setup* newGame;
+Combine* newerGame;
 Game::Game(QWidget *parent){
     // set up the screen
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -23,17 +25,12 @@ void Game::start(){
 
     newGame = new setup();
     newGame -> show();
-
-    // test code TODO remove
-    //hexBoard = new HexBoard();
-    //hexBoard->placeHexes(100,100,3,3);
 }
 
 void Game::helpDisplay(){
     scene->clear();
-    //newGame = new setup();
-    //newGame -> show();
-
+    newerGame = new Combine();
+    newerGame -> show();
 }
 
 void Game::closeGame(){

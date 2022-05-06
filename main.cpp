@@ -2,10 +2,12 @@
 #include <QTimer>
 
 #include "setup.h"
+//#include "Combine.h"
 #include "Game.h"
 
 Game* ui;
 setup* newGame;
+//Combine* newerGame;
 
 int main(int argc, char *argv[]) {
 
