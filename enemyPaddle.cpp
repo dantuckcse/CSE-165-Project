@@ -57,6 +57,9 @@ void enemyPaddle::enemyAIMovement() {
         setPos(x() + 10 * paddleSpeed, y());
     }
 
+    if(newGame->gameTimer->remainingTime() == 0){ //if the time remaning is 0 we close the application
+        exit(0);
+    }
 }
 
 //allows the enemies ball to be lanuched by the enemy

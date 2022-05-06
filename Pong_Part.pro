@@ -17,7 +17,9 @@ SOURCES += \
     playerBall.cpp \
     playerPaddle.cpp \
     playerScore.cpp \
-    setup.cpp
+    setup.cpp \
+    Game.cpp \
+    Button.cpp
 
 HEADERS += \
     PlayerBall.h \
@@ -27,7 +29,9 @@ HEADERS += \
     enemyScore.h \
     playerPaddle.h \
     playerScore.h \
-    setup.h
+    setup.h \
+    Game.h \
+    Button.h
 
 FORMS +=
 

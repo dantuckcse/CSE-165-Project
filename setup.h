@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QTimer>
 
 #include "playerPaddle.h"
 #include "PlayerBall.h"
@@ -16,10 +17,12 @@ class setup: public QGraphicsView {
 public:
 
     setup();
+    void exitGame();
     void createBlockCol(double x);
     void createBlockGrid();
 
     QGraphicsScene* scene;
+    QTimer *gameTimer;
     playerPaddle* pp;
     enemyPaddle* ep;
     playerBall* pb;

@@ -10,6 +10,7 @@
 #include "setup.h"
 #include "block.h"
 
+
 extern setup* newGame;
 
 //sets up player ball

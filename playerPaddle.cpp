@@ -6,9 +6,10 @@
 
 #include "setup.h"
 #include "playerPaddle.h"
+#include "Game.h"
 
 extern setup* newGame;
-
+extern Game* ui;
 //sets up player paddle
 playerPaddle::playerPaddle() {
 
@@ -66,18 +67,24 @@ void playerPaddle::keyPressEvent(QKeyEvent *event) {
 
         //if first ball
         if(startingBall) {
-
             started = true;
             newGame->pb->startingBall();
             startingBall = false;
+            newGame->gameTimer->start(120000);
         }
 
         //if subsequent ball (missed or hit by opposing ball)
         else if(newGame->pb->launch()) {
-
             newGame->pb->subsequentBalls();
         }
 
+    }
+
+    if(event->key() == Qt::Key_Escape) {
+    newGame->scene->clear();
+      ui = new Game();
+       ui -> show();
+        ui -> displayMainMenu();
     }
 
 }
