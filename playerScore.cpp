@@ -25,4 +25,7 @@ int playerScore::getPlayerScore()
     return player_Score;
 }
 
-
+void playerScore::setToZero()
+{
+    player_Score = 0;
+}

@@ -8,6 +8,7 @@ public:
     playerScore(QGraphicsItem * parent=0);
     void changePlayerScore(int num);
     int getPlayerScore();
+    void setToZero();
 
 private:
     int player_Score;

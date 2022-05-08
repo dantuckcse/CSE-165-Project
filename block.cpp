@@ -7,9 +7,6 @@ Block::Block(QGraphicsItem *parent): QGraphicsRectItem(parent){
     setRect(0,0,90,25);
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
-    //quint32 r = QRandomGenerator::global()->bounded(100, 255);
-    //quint32 g = QRandomGenerator::global()->bounded(100, 255);
-    //quint32 b = QRandomGenerator::global()->bounded(100, 255);
     quint32 n = QRandomGenerator::global()->bounded(0, 9); // generates a random number between 0 and 9
     QColor colors[10] = {QColor(175, 20, 144), QColor(235, 153, 0), QColor(89, 159, 0), QColor(62, 67, 229), QColor(226, 0, 0), //an array of colors
                          QColor(255, 60, 56), QColor(57, 246, 255), QColor(255, 236, 0), QColor(0, 240, 91), QColor(255, 132, 166)};
