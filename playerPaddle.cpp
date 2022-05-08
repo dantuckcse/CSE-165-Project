@@ -43,6 +43,9 @@ void playerPaddle::sc(){
 //has conditions for paddle not being able to move off screen
 void playerPaddle::keyPressEvent(QKeyEvent *event) {
 
+    setFlag(QGraphicsItem::ItemIsFocusable);
+    setFocus();
+
     //left key event
     if(event->key() == Qt::Key_Left) {
 

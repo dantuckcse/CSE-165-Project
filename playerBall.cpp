@@ -85,8 +85,12 @@ void playerBall::ballMovement() {
 
     if(Collisions.size() == 1) {
 
+        if ((typeid(*(Collisions[0])) == typeid(enemyScore)) || (typeid(*(Collisions[0])) == typeid(playerScore))) {
+            transY = -transY;
+        }
+
         //causes enemy ball to move in opposite Y direction if it collides with any non-enemy paddle objects
-        if(typeid(*(Collisions[0])) != typeid(enemyPaddle)) {
+        if((typeid(*(Collisions[0])) != typeid(enemyPaddle))) {
 
             BlockCollision();
             transY *= -1;
@@ -94,7 +98,6 @@ void playerBall::ballMovement() {
 
         //causes player ball to move in opposite Y direction if it collides with the enemy paddle
         //and resets enemy ball as penalty
-        //WIP: will remove points from enemy
         else if(typeid(*(Collisions[0])) == typeid(enemyPaddle)) {
 
             transY *= -1;
@@ -109,6 +112,7 @@ void playerBall::ballMovement() {
         }
 
     }
+
     //player ball changes X directions if colliding with left or right screen edge
     if(pos().x() <= 0 || pos().x() + 20 >= 900) {
 

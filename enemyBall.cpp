@@ -82,7 +82,11 @@ void enemyBall::ballMovement() {
     //manages the collision conditions
     QList<QGraphicsItem *> Collisions = collidingItems();
 
-    if(Collisions.size() == 1) {
+    if(Collisions.size() >= 1) {
+
+        if ((typeid(*(Collisions[0])) == typeid(enemyScore)) || (typeid(*(Collisions[0])) == typeid(playerScore))) {
+            transY = -transY;
+        }
 
         //causes enemy ball to move in opposite Y direction if it collides with any non-player paddle objects
         if(typeid(*(Collisions[0])) != typeid(playerPaddle)) {
@@ -93,7 +97,6 @@ void enemyBall::ballMovement() {
 
         //causes enemy ball to move in opposite Y direction if it collides with the player paddle
         //and resets player ball as penalty
-        //WIP: will remove points from player
         else if(typeid(*(Collisions[0])) == typeid(playerPaddle)) {
 
             transY *= -1;

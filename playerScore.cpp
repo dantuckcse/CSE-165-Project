@@ -24,5 +24,3 @@ int playerScore::getPlayerScore()
 {
     return player_Score;
 }
-
-

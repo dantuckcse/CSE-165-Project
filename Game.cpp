@@ -3,7 +3,8 @@
 #include "Button.h"
 #include <QGraphicsTextItem>
 #include "setup.h"
-#include "Combine.h"
+#include <string>
+//#include "Combine.h"
 
 extern setup* newGame;
 extern Game* ui;
@@ -144,12 +145,20 @@ void Game::displayHelpScreen(){
     text7->setPos(txPos7,tyPos7);
     scene->addItem(text7);
 
-    QGraphicsTextItem* text8 = new QGraphicsTextItem(QString("Press back button to go back to main menu."));
+    QGraphicsTextItem* text8 = new QGraphicsTextItem(QString("ATTENTION! Remeber to press on the blue paddle!"));
     text8->setFont(titleFont);
+    text8->setDefaultTextColor(Qt::red);
     int txPos8 = this->width()/2 - text8->boundingRect().width()/2;
-    int tyPos8 = 500;
+    int tyPos8 = 400;
     text8->setPos(txPos8,tyPos8);
     scene->addItem(text8);
+
+    QGraphicsTextItem* text9 = new QGraphicsTextItem(QString("Press back button to go back to main menu."));
+    text9->setFont(titleFont);
+    int txPos9 = this->width()/2 - text9->boundingRect().width()/2;
+    int tyPos9 = 500;
+    text9->setPos(txPos9,tyPos9);
+    scene->addItem(text9);
 
     Button* backButton = new Button(QString("Back"));
 
