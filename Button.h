@@ -8,7 +8,7 @@ class Button: public QObject, public QGraphicsRectItem{
     Q_OBJECT
 public:
     // constructors
-    Button(QString name, QGraphicsItem* parent=NULL);
+    Button(QString name, QGraphicsItem* parent = NULL);
 
     // public methods (events)
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

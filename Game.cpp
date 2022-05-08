@@ -1,13 +1,12 @@
 #include "Game.h"
-//#include "Score.h"
 #include "Button.h"
 #include <QGraphicsTextItem>
 #include "setup.h"
 #include <string>
-//#include "Combine.h"
 
 extern setup* newGame;
 extern Game* ui;
+
 Game::Game(QWidget *parent){
     // set up the screen
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -48,37 +47,37 @@ void Game::mainMenu(){
 }
 
 //sets the graphics items for the main menu
-void Game::displayMainMenu(){
+void Game::displayMainMenu() {
     //create the title text
     QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Breakout"));
     QFont titleFont("sans serif",50);
     titleText->setFont(titleFont);
-    int txPos = this->width()/2 - titleText->boundingRect().width()/2;
-    int tyPos = 150;
-    titleText->setPos(txPos,tyPos);
+    int txPosition = this->width()/2 - titleText->boundingRect().width()/2;
+    int tyPosition = 150;
+    titleText->setPos(txPosition,tyPosition);
     scene->addItem(titleText);
 
     //create the play button
     Button* playButton = new Button(QString("Play Game"));
-    int bxPos = this->width()/2 - playButton->boundingRect().width()/2;
-    int byPos = 250;
-    playButton->setPos(bxPos,byPos);
+    int bxPosition = this->width()/2 - playButton->boundingRect().width()/2;
+    int byPosition = 250;
+    playButton->setPos(bxPosition,byPosition);
     connect(playButton,SIGNAL(clicked()),this,SLOT(start()));
     scene->addItem(playButton);
 
     //create the help button
     Button* help = new Button(QString("Help"));
-    int helpxPos = this->width()/2 - help->boundingRect().width()/2;
-    int helpyPos = 330;
-    help->setPos(helpxPos,helpyPos);
+    int helpxPosition = this->width()/2 - help->boundingRect().width()/2;
+    int helpyPosition = 330;
+    help->setPos(helpxPosition,helpyPosition);
     connect(help,SIGNAL(clicked()),this,SLOT(helpDisplay()));
     scene->addItem(help);
 
     //create the quit button
     Button* quitButton = new Button(QString("Quit"));
-    int qxPos = this->width()/2 - quitButton->boundingRect().width()/2;
-    int qyPos = 410;
-    quitButton->setPos(qxPos,qyPos);
+    int qxPosition = this->width()/2 - quitButton->boundingRect().width()/2;
+    int qyPosition = 410;
+    quitButton->setPos(qxPosition,qyPosition);
     connect(quitButton,SIGNAL(clicked()),this,SLOT(closeGame()));
     scene->addItem(quitButton);
 }
@@ -145,7 +144,7 @@ void Game::displayHelpScreen(){
     text7->setPos(txPos7,tyPos7);
     scene->addItem(text7);
 
-    QGraphicsTextItem* text8 = new QGraphicsTextItem(QString("ATTENTION! Remeber to press on the blue paddle!"));
+    QGraphicsTextItem* text8 = new QGraphicsTextItem(QString("ATTENTION! Remember to press on the blue paddle!"));
     text8->setFont(titleFont);
     text8->setDefaultTextColor(Qt::red);
     int txPos8 = this->width()/2 - text8->boundingRect().width()/2;
@@ -198,7 +197,7 @@ void Game::displayScoreBoard(){
         scene->addItem(win);
     }
     else if(newGame->ps->getPlayerScore() < newGame->es->getEnemyScore()){
-        QGraphicsTextItem* loss = new QGraphicsTextItem(QString("You lost!"));
+        QGraphicsTextItem* loss = new QGraphicsTextItem(QString("You Lost!"));
         loss->setFont(titleFont);
         loss->setDefaultTextColor(Qt::red);
         int txPos2 = this->width()/2 - loss->boundingRect().width()/2;
@@ -207,7 +206,7 @@ void Game::displayScoreBoard(){
         scene->addItem(loss);
     }
     else{
-        QGraphicsTextItem* draw = new QGraphicsTextItem(QString("Draw! Better Luck next Time."));
+        QGraphicsTextItem* draw = new QGraphicsTextItem(QString("Draw! Better Luck Next Time."));
         draw->setFont(titleFont);
         draw->setDefaultTextColor(Qt::green);
         int txPos2 = this->width()/2 - draw->boundingRect().width()/2;
