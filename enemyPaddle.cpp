@@ -63,7 +63,6 @@ void enemyPaddle::enemyAILaunch(){
 
     //if first ball
     if(startingBall && newGame->pp->started) {
-
         newGame->eb->startingBall();
         startingBall = false;
     }

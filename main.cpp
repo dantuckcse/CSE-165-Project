@@ -2,7 +2,6 @@
 #include <QTimer>
 
 #include "setup.h"
-//#include "Combine.h"
 #include "Game.h"
 
 Game* ui;

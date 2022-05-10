@@ -24,3 +24,8 @@ int enemyScore::getEnemyScore()
 {
     return enemy_Score;
 }
+
+void enemyScore::setToZero()
+{
+    enemy_Score = 0;
+}
